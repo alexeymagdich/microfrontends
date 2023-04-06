@@ -13,12 +13,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <StylesProvider generateClassName={generateClassName}>
-        <div>
-          <Switch>
-            <Route exact path="/pricing" component={Pricing} />
-            <Route path="/" component={Landing} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/pricing" component={Pricing} />
+          <Route path="/" component={Landing} />
+        </Switch>
       </StylesProvider>
     </BrowserRouter>
   );
