@@ -7,7 +7,6 @@ import Header from "./components/Header";
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "co",
-  seed: "co",
 });
 
 export default function App() {

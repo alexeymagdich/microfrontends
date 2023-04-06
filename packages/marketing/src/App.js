@@ -7,7 +7,6 @@ import Pricing from "./components/Pricing";
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "ma",
-  seed: "ma",
 });
 
 export default function App() {
