@@ -1,21 +1,36 @@
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import { StylesProvider, createGenerateClassName } from "@material-ui/core";
+import React, { lazy, Suspense, useState } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { StylesProvider, createGenerateClassName } from '@material-ui/core';
 
-import Marketing from "./components/Marketing";
-import Header from "./components/Header";
+import Header from './components/Header';
+import Progress from './components/Progress';
+
+const AuthLazy = lazy(() => import('./components/Auth'));
+const MarketingLazy = lazy(() => import('./components/Marketing'));
 
 const generateClassName = createGenerateClassName({
-  productionPrefix: "co",
+  productionPrefix: 'co',
 });
 
 export default function App() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   return (
     <BrowserRouter>
       <StylesProvider generateClassName={generateClassName}>
         <div>
-          <Header />
-          <Marketing />
+          <Header
+            isSignedIn={isSignedIn}
+            onSignOut={() => setIsSignedIn(false)}
+          />
+          <Suspense fallback={<Progress />}>
+            <Switch>
+              <Route path="/auth">
+                <AuthLazy onSignIn={() => setIsSignedIn(true)} />
+              </Route>
+              <Route path="/" component={MarketingLazy}></Route>
+            </Switch>
+          </Suspense>
         </div>
       </StylesProvider>
     </BrowserRouter>

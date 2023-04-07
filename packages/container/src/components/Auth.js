@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { mount as mountMarketing } from 'marketing/Marketing';
+import { mount as mountAuth } from 'auth/Auth';
 
-function onNavigateMarketing(location, history) {
+function onNavigateAuth(location, history) {
   const { pathname: nextPathname } = location;
   const { pathname } = history.location;
 
@@ -12,14 +12,15 @@ function onNavigateMarketing(location, history) {
   }
 }
 
-export default function Marketing() {
+export default function Auth({ onSignIn }) {
   const ref = useRef(null);
   const history = useHistory();
 
   useEffect(() => {
-    const { onContainerNavigate } = mountMarketing(ref.current, {
-      onNavigate: (location) => onNavigateMarketing(location, history),
+    const { onContainerNavigate } = mountAuth(ref.current, {
       initialPath: history.location.pathname,
+      onNavigate: (location) => onNavigateAuth(location, history),
+      onSignIn,
     });
 
     history.listen(onContainerNavigate);

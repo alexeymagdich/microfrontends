@@ -14,7 +14,7 @@ function onContainerNavigate(location, history) {
 }
 
 function mount(element, options) {
-  const { onNavigate, defaultHistory, initialPath } = options;
+  const { onNavigate, defaultHistory, initialPath, onSignIn } = options;
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -25,7 +25,7 @@ function mount(element, options) {
     history.listen(onNavigate);
   }
 
-  ReactDOM.render(<App history={history} />, element);
+  ReactDOM.render(<App history={history} onSignIn={onSignIn} />, element);
 
   return {
     onContainerNavigate: (location) => onContainerNavigate(location, history),
@@ -33,7 +33,7 @@ function mount(element, options) {
 }
 
 const isDev = process.env.NODE_ENV === 'development';
-const devRoot = document.querySelector('#_marketing-dev-root');
+const devRoot = document.querySelector('#_auth-dev-root');
 const isIsolationMode = !!devRoot;
 
 if (isDev && isIsolationMode) {
